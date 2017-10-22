@@ -445,3 +445,8 @@ def validate_agent_amqp(current_amqp=True, **_):
         raise NonRecoverableError(result['agent_alive_error'])
     if not current_amqp and not result['agent_alive_crossbroker']:
         raise NonRecoverableError(result['agent_alive_crossbroker_error'])
+
+
+@operation
+def transfer_agent(new_manager_host, new_certificate, **_):
+    pass
