@@ -113,6 +113,10 @@ class CloudifyAgentConfig(dict):
     def is_windows(self):
         return self['windows']
 
+    @property
+    def is_shell(self):
+        return self.get('shell', False)
+
     def set_default_values(self):
         self._set_process_management()
         self._set_name()

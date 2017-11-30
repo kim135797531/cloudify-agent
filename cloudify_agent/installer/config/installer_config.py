@@ -23,6 +23,7 @@ from cloudify_agent.installer.linux import LocalLinuxAgentInstaller
 from cloudify_agent.installer.linux import RemoteLinuxAgentInstaller
 from cloudify_agent.installer.windows import LocalWindowsAgentInstaller
 from cloudify_agent.installer.windows import RemoteWindowsAgentInstaller
+from cloudify_agent.installer.runners.shell_runner import ShellRunner
 from cloudify_agent.installer.runners.fabric_runner import FabricRunner
 from cloudify_agent.installer.runners.winrm_runner import WinRMRunner
 from cloudify_agent.installer.runners.stub_runner import StubRunner
@@ -60,6 +61,13 @@ def create_runner(agent_config, validate_connection):
                     protocol=agent_config.get('protocol'),
                     uri=agent_config.get('uri'),
                     logger=ctx.logger,
+                    validate_connection=validate_connection)
+            elif agent_config.is_shell:
+                runner = ShellRunner(
+                    is_shell=agent_config.get('shell', False),
+                    logger=ctx.logger,
+                    conn_cmd=agent_config['conn_cmd'],
+                    sh_cmd=agent_config.get('sh_cmd', '/bin/sh'),
                     validate_connection=validate_connection)
             else:
                 runner = FabricRunner(
